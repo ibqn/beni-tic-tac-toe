@@ -25,17 +25,13 @@ const Button = styled.button`
   }
 `
 
-const Square = ({ value, onClick }) => {
-  return (
-    <Button className="square" onClick={onClick}>
-      {value}
-    </Button>
-  )
-}
+const Square = ({ value, onClick }) => (
+  <Button onClick={onClick}>{value}</Button>
+)
 
 Square.propTypes = {
-  values: Proptypes.string,
-  onClick: Proptypes.func,
+  values: Proptypes.string.isRequired,
+  onClick: Proptypes.func.isRequired,
 }
 
 export default Square
