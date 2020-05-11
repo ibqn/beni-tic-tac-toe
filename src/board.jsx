@@ -9,17 +9,17 @@ const Board = () => {
   const [isX, setIsX] = useState(true)
 
   const handleClick = (i) => {
-    let newSquares = squares.slice()
+    const newSquares = squares.slice()
     newSquares[i] = isX ? `X` : `O`
 
-    console.log("isX", isX, "clicked", i)
+    // console.log("isX", isX, "clicked", i)
     setIsX(!isX)
     setSquares(newSquares)
   }
 
-  const renderSquare = (i) => {
-    return <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />
-  }
+  const renderSquare = (i) => (
+    <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />
+  )
 
   const status = `Next player: ${isX ? "X" : "O"}`
 
@@ -27,15 +27,13 @@ const Board = () => {
     <div>
       <div className="status">{status}</div>
 
-      {Array.from({ length: boardSize }).map((_, i) => {
-        return (
-          <div key={i} className="board-row">
-            {Array.from({ length: boardSize }).map((_, j) => {
-              return renderSquare(i * boardSize + j)
-            })}
-          </div>
-        )
-      })}
+      {Array.from({ length: boardSize }).map((_, row) => (
+        <div key={row} className="board-row">
+          {Array.from({ length: boardSize }).map((_, column) =>
+            renderSquare(row * boardSize + column)
+          )}
+        </div>
+      ))}
     </div>
   )
 }
