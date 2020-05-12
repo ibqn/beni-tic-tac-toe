@@ -2,8 +2,6 @@ import React from "react"
 
 import Game from "./game"
 
-function App() {
-  return <Game />
-}
+const App = () => <Game />
 
 export default App
