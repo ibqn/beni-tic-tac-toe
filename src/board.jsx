@@ -9,7 +9,11 @@ const Board = () => {
   const [isX, setIsX] = useState(true)
 
   const handleClick = (i) => {
+    if (squares[i]) {
+      return
+    }
     const newSquares = squares.slice()
+
     newSquares[i] = isX ? `X` : `O`
 
     // console.log("isX", isX, "clicked", i)
@@ -20,6 +24,11 @@ const Board = () => {
   const renderSquare = (i) => (
     <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />
   )
+
+  // const calculateWinner = (i) => {
+  //   const r = Math.trunc(i / boardSize)
+  //   const c = i % boardSize
+  // }
 
   const status = `Next player: ${isX ? "X" : "O"}`
 
