@@ -1,5 +1,3 @@
-import React from "react"
-
 import Game from "./game"
 
 const App = () => <Game />
