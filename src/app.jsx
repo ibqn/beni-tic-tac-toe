@@ -1,5 +1,1 @@
-import Game from "./game"
-
-const App = () => <Game />
-
-export default App
+export { default } from "./game"
