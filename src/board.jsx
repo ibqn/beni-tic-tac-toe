@@ -1,8 +1,17 @@
 import { useState } from "react"
+import styled from "styled-components"
 import Square from "./square"
 
+const boardSize = 40
+
+const Frame = styled.div`
+  display: grid;
+  grid-template-columns: repeat(${boardSize}, 1fr);
+  grid-template-rows: repeat(${boardSize}, 1fr);
+  gap: 0;
+`
+
 const Board = () => {
-  const boardSize = 40
   const [squares, setSquares] = useState(
     Array(boardSize * boardSize).fill(null)
   )
@@ -36,17 +45,15 @@ const Board = () => {
   const status = `Next player: ${isX ? "X" : "O"}`
 
   return (
-    <div>
+    <>
       <div className="status">{status}</div>
 
-      {Array.from({ length: boardSize }).map((_, row) => (
-        <div key={row} className="board-row">
-          {Array.from({ length: boardSize }).map((_, column) =>
-            renderSquare(row * boardSize + column)
-          )}
-        </div>
-      ))}
-    </div>
+      <Frame>
+        {Array.from({ length: boardSize * boardSize }).map((_, idx) =>
+          renderSquare(idx)
+        )}
+      </Frame>
+    </>
   )
 }
 

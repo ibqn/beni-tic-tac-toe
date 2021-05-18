@@ -2,16 +2,16 @@ import Proptypes from "prop-types"
 import styled from "styled-components"
 
 const Button = styled.button`
-  background: #fff;
   border: 1px solid #999;
-  float: left;
+  padding: 0;
+  font-family: inherit;
+  background: #fff;
   font-size: 14px;
   font-weight: bold;
   line-height: 22px;
   height: 22px;
   margin-right: -1px;
   margin-top: -1px;
-  padding: 0;
   text-align: center;
   width: 22px;
 
