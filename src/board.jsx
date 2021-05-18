@@ -11,13 +11,17 @@ const Frame = styled.div`
   gap: 0;
 `
 
+const Status = styled.div`
+  margin-bottom: 10px;
+`
+
 const Board = () => {
   const [squares, setSquares] = useState(
     Array(boardSize * boardSize).fill(null)
   )
   const [isX, setIsX] = useState(true)
 
-  const handleClick = (idx) => {
+  const handleClick = () => (idx) => {
     if (squares[idx]) {
       return
     }
@@ -34,7 +38,7 @@ const Board = () => {
   }
 
   const renderSquare = (i) => (
-    <Square key={i} value={squares[i]} onClick={() => handleClick(i)} />
+    <Square key={i} value={squares[i]} onClick={handleClick(i)} />
   )
 
   // const calculateWinner = (i) => {
@@ -46,7 +50,7 @@ const Board = () => {
 
   return (
     <>
-      <div className="status">{status}</div>
+      <Status>{status}</Status>
 
       <Frame>
         {Array.from({ length: boardSize * boardSize }).map((_, idx) =>
