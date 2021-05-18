@@ -8,13 +8,16 @@ const Board = () => {
   )
   const [isX, setIsX] = useState(true)
 
-  const handleClick = (i) => {
-    if (squares[i]) {
+  const handleClick = (idx) => {
+    if (squares[idx]) {
       return
     }
-    const newSquares = squares.slice()
-
-    newSquares[i] = isX ? `X` : `O`
+    const newSquares = squares.map((square, index) => {
+      if (index === idx) {
+        return isX ? `X` : `O`
+      }
+      return square
+    })
 
     // console.log("isX", isX, "clicked", i)
     setIsX(!isX)
