@@ -41,12 +41,9 @@ const Board = () => {
       for (let i = -5; i <= 5; i++) {
         const newX = i * dir.x + x
         const newY = i * dir.y + y
+        const [newSquare] = newSquares[newX + boardSize * newY] || []
 
-        if (
-          0 <= newX &&
-          newX < boardSize &&
-          square === newSquares[newX + boardSize * newY]
-        ) {
+        if (0 <= newX && newX < boardSize && square === newSquare) {
           count++
           list.push(newX + boardSize * newY)
         } else {
@@ -54,14 +51,11 @@ const Board = () => {
           list = []
         }
 
-        // console.log("count", count)
-
         if (count >= 5) {
           return [true, list]
         }
       }
     }
-    // console.log("-")
 
     return [false]
   }
