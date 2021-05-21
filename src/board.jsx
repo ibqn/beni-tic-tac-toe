@@ -25,76 +25,40 @@ const Board = () => {
     const x = idx % boardSize
     const y = Math.trunc(idx / boardSize)
 
-    let countR = 0
-    let countC = 0
-    let countD = 0
-    let countE = 0
-
-    let listR = []
-    let listC = []
-    let listD = []
-    let listE = []
+    const directions = [
+      { x: 1, y: 0 },
+      { x: 0, y: 1 },
+      { x: 1, y: 1 },
+      { x: 1, y: -1 },
+    ]
 
     const square = isX ? `X` : `O`
 
-    for (let i = -5; i <= 5; i++) {
-      if (
-        0 <= i + x &&
-        i + x < boardSize &&
-        square === newSquares[i + x + boardSize * y]
-      ) {
-        countR++
-        listR.push(i + x + boardSize * y)
-      } else {
-        countR = 0
-        listR = []
-      }
+    for (const dir of directions) {
+      let count = 0
+      let list = []
 
-      if (square === newSquares[x + boardSize * (y + i)]) {
-        countC++
-        listC.push(x + boardSize * (y + i))
-      } else {
-        countC = 0
-        listC = []
-      }
+      for (let i = -5; i <= 5; i++) {
+        const newX = i * dir.x + x
+        const newY = i * dir.y + y
 
-      if (
-        0 <= i + x &&
-        i + x < boardSize &&
-        square === newSquares[x + i + boardSize * (y + i)]
-      ) {
-        countD++
-        listD.push(x + i + boardSize * (y + i))
-      } else {
-        countD = 0
-        listD = []
-      }
+        if (
+          0 <= newX &&
+          newX < boardSize &&
+          square === newSquares[newX + boardSize * newY]
+        ) {
+          count++
+          list.push(newX + boardSize * newY)
+        } else {
+          count = 0
+          list = []
+        }
 
-      if (
-        0 <= i + x &&
-        i + x < boardSize &&
-        square === newSquares[x + i + boardSize * (y - i)]
-      ) {
-        countE++
-        listE.push(x + i + boardSize * (y - i))
-      } else {
-        countE = 0
-        listE = []
-      }
+        // console.log("count", count)
 
-      // console.log("count", count)
-
-      if (countR >= 5) {
-        return [true, listR]
-      }
-      if (countC >= 5) {
-        return [true, listC]
-      }
-      if (countD >= 5) {
-        return [true, listD]
-      }
-      if (countE >= 5) {
-        return [true, listE]
+        if (count >= 5) {
+          return [true, list]
+        }
       }
     }
     // console.log("-")
