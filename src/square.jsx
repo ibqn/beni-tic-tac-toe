@@ -1,9 +1,10 @@
-import Proptypes from "prop-types"
+import PropTypes from "prop-types"
 import styled from "styled-components"
 
 const Button = styled.button`
   border: 1px solid #999;
   padding: 0;
+  color: ${(props) => (props.mark ? "red" : "inherit")};
   font-family: inherit;
   background: #fff;
   font-size: 14px;
@@ -24,13 +25,18 @@ const Button = styled.button`
   }
 `
 
-const Square = ({ value, onClick }) => (
-  <Button onClick={onClick}>{value}</Button>
-)
+const Square = ({ value, onClick }) => {
+  const [piece, color] = value || []
+  return (
+    <Button mark={color} onClick={onClick}>
+      {piece}
+    </Button>
+  )
+}
 
 Square.propTypes = {
-  values: Proptypes.string,
-  onClick: Proptypes.func.isRequired,
+  values: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default Square
