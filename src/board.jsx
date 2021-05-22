@@ -35,7 +35,6 @@ const Board = () => {
     const square = isX ? `X` : `O`
 
     for (const dir of directions) {
-      let count = 0
       let list = []
 
       for (let i = -5; i <= 5; i++) {
@@ -44,14 +43,12 @@ const Board = () => {
         const [newSquare] = newSquares[newX + boardSize * newY] || []
 
         if (0 <= newX && newX < boardSize && square === newSquare) {
-          count++
           list.push(newX + boardSize * newY)
         } else {
-          count = 0
           list = []
         }
 
-        if (count >= 5) {
+        if (list.length >= 5) {
           return [true, list]
         }
       }
