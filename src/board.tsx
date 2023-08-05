@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Square } from "@/square"
-import { type SquareType } from "@/type"
+import { type SquareType } from "@/types"
 
 const boardSize = 40
 

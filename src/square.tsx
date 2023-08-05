@@ -1,5 +1,5 @@
 import { cn } from "@/class-names"
-import { type SquareType } from "@/type"
+import { type SquareType } from "@/types"
 
 type Props = {
   value: SquareType | null
