@@ -1,9 +1,9 @@
 ## Getting Started
 
-This project was created with
+This project is using vite
 
 ```shell
-npx create-react-app beni-tic-tac-toe
+pnpm dev
 ```
 
 !['screenshot'](screenshot.png)

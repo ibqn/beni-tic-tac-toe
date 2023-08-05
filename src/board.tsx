@@ -1,27 +1,19 @@
-import { useState } from "react"
-import styled from "styled-components"
-import Square from "./square"
+import { useMemo, useState } from "react"
+import { Square } from "@/square"
+import { type SquareType } from "./type"
 
 const boardSize = 40
 
-const Frame = styled.div`
-  display: grid;
-  grid-template-columns: repeat(${boardSize}, 1fr);
-  grid-template-rows: repeat(${boardSize}, 1fr);
-  gap: 0;
-`
-
-const Status = styled.div`
-  margin-bottom: 10px;
-`
-
-const Board = () => {
+export const Board = () => {
   const [squares, setSquares] = useState(
-    Array(boardSize * boardSize).fill(null)
+    Array(boardSize * boardSize).fill([null]) as SquareType[]
   )
   const [isX, setIsX] = useState(true)
 
-  const haveWinner = (idx, newSquares) => {
+  const haveWinner = (
+    idx: number,
+    newSquares: SquareType[]
+  ): [boolean, number[]] => {
     const x = idx % boardSize
     const y = Math.trunc(idx / boardSize)
 
@@ -35,7 +27,7 @@ const Board = () => {
     const square = isX ? `X` : `O`
 
     for (const dir of directions) {
-      let list = []
+      let list: number[] = []
 
       for (let i = -5; i <= 5; i++) {
         const newX = i * dir.x + x
@@ -54,16 +46,19 @@ const Board = () => {
       }
     }
 
-    return [false]
+    return [false, []]
   }
 
-  const handleClick = (idx) => () => {
-    if (squares[idx]) {
+  const handleClick = (idx: number) => () => {
+    const [value] = squares[idx]
+
+    if (value) {
       return
     }
+
     const newSquares = squares.map((square, index) => {
       if (index === idx) {
-        return isX ? `X` : `O`
+        return [isX ? `X` : `O`] as SquareType
       }
       return square
     })
@@ -78,7 +73,8 @@ const Board = () => {
     if (winner) {
       const markedSquares = newSquares.map((square, index) => {
         if (list.includes(index)) {
-          return [square, true]
+          const [value] = square
+          return [value, true] as SquareType
         }
         return square
       })
@@ -86,23 +82,23 @@ const Board = () => {
     }
   }
 
-  const renderSquare = (i) => (
+  const renderSquare = (i: number) => (
     <Square key={i} value={squares[i]} onClick={handleClick(i)} />
   )
 
-  const status = `Next player: ${isX ? "X" : "O"}`
+  const status = useMemo(() => (isX ? "X" : "O"), [isX])
 
   return (
     <>
-      <Status>{status}</Status>
+      <div className="mb-2.5">
+        Next player: <span className="font-bold">{status}</span>
+      </div>
 
-      <Frame>
+      <div className="grid gap-0 grid-cols-40 grid-rows-40 mr-[1px] mt-[1px]">
         {Array.from({ length: boardSize * boardSize }).map((_, idx) =>
           renderSquare(idx)
         )}
-      </Frame>
+      </div>
     </>
   )
 }
-
-export default Board
