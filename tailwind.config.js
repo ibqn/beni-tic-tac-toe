@@ -12,6 +12,9 @@ export default {
       fontFamily: {
         century: ['"Century Gothic"', "Futura", "sans-serif"],
       },
+      colors: {
+        grau: "#999",
+      },
     },
   },
   plugins: [],
