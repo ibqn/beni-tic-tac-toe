@@ -89,7 +89,7 @@ export const Board = () => {
         Next player: <span className="font-bold">{square}</span>
       </div>
 
-      <div className="mr-[1px] mt-[1px] grid grid-cols-board grid-rows-board gap-0">
+      <div className="mr-px mt-px grid grid-cols-board grid-rows-board gap-0">
         {Array.from({ length: boardSize * boardSize }).map((_, idx) => renderSquare(idx))}
       </div>
     </>
