@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --board-size: 20;
+  }
+
   body {
-    @apply p-5 antialiased text-sm font-century;
+    @apply p-5 font-century text-sm antialiased;
   }
 }

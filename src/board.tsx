@@ -1,19 +1,16 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Square } from "@/square"
-import { type SquareType } from "./type"
+import { type SquareType } from "@/type"
 
 const boardSize = 40
 
 export const Board = () => {
-  const [squares, setSquares] = useState(
-    Array(boardSize * boardSize).fill([null]) as SquareType[]
-  )
+  const [squares, setSquares] = useState(Array(boardSize * boardSize).fill([null]) as SquareType[])
   const [isX, setIsX] = useState(true)
 
-  const haveWinner = (
-    idx: number,
-    newSquares: SquareType[]
-  ): [boolean, number[]] => {
+  const square = useMemo(() => (isX ? "X" : "O"), [isX])
+
+  const haveWinner = (idx: number, newSquares: SquareType[]): [boolean, number[]] => {
     const x = idx % boardSize
     const y = Math.trunc(idx / boardSize)
 
@@ -23,8 +20,6 @@ export const Board = () => {
       { x: 1, y: 1 },
       { x: 1, y: -1 },
     ]
-
-    const square = isX ? `X` : `O`
 
     for (const dir of directions) {
       let list: number[] = []
@@ -82,22 +77,20 @@ export const Board = () => {
     }
   }
 
-  const renderSquare = (i: number) => (
-    <Square key={i} value={squares[i]} onClick={handleClick(i)} />
-  )
+  const renderSquare = (i: number) => <Square key={i} value={squares[i]} onClick={handleClick(i)} />
 
-  const status = useMemo(() => (isX ? "X" : "O"), [isX])
+  useEffect(() => {
+    document.documentElement.style.setProperty("--board-size", String(boardSize))
+  })
 
   return (
     <>
       <div className="mb-2.5">
-        Next player: <span className="font-bold">{status}</span>
+        Next player: <span className="font-bold">{square}</span>
       </div>
 
-      <div className="grid gap-0 grid-cols-40 grid-rows-40 mr-[1px] mt-[1px]">
-        {Array.from({ length: boardSize * boardSize }).map((_, idx) =>
-          renderSquare(idx)
-        )}
+      <div className="mr-[1px] mt-[1px] grid grid-cols-board grid-rows-board gap-0">
+        {Array.from({ length: boardSize * boardSize }).map((_, idx) => renderSquare(idx))}
       </div>
     </>
   )

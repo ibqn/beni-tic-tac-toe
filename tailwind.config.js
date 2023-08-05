@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       gridTemplateRows: {
-        40: "repeat(40, minmax(0, 1fr))",
+        board: "repeat(var(--board-size), minmax(0, 1fr))",
       },
       gridTemplateColumns: {
-        40: "repeat(40, minmax(0, 1fr))",
+        board: "repeat(var(--board-size), minmax(0, 1fr))",
       },
       fontFamily: {
-        century: ["Century Gothic", "Futura", "sans-serif"],
+        century: ['"Century Gothic"', "Futura", "sans-serif"],
       },
     },
   },
