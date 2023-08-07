@@ -8,6 +8,6 @@
   }
 
   body {
-    @apply p-5 font-century text-sm antialiased;
+    @apply font-century text-sm antialiased;
   }
 }
