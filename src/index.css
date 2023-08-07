@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --board-size: 20;
+    --board-size: 40;
   }
 
   body {
