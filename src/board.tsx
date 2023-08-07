@@ -3,10 +3,12 @@ import { Square } from "@/square"
 import { type SquareType } from "@/types"
 
 const boardSize = 40
+const defaultSquares = Array(boardSize * boardSize).fill([null]) as SquareType[]
 
 export const Board = () => {
-  const [squares, setSquares] = useState(Array(boardSize * boardSize).fill([null]) as SquareType[])
+  const [squares, setSquares] = useState(defaultSquares)
   const [isX, setIsX] = useState(true)
+  const [moveHistory, setMoveHistory] = useState<number[]>([])
 
   const square = useMemo(() => (isX ? "X" : "O"), [isX])
 
@@ -44,6 +46,16 @@ export const Board = () => {
     return [false, []]
   }
 
+  const handleUndo = () => {
+    const undoSquareIndex = moveHistory.slice(-1).pop()
+
+    if (undoSquareIndex !== undefined) {
+      setIsX(!isX)
+      setMoveHistory(moveHistory.slice(0, -1))
+      setSquares(squares.map((square, index) => (index === undoSquareIndex ? [null] : [square[0]])))
+    }
+  }
+
   const handleClick = (idx: number) => () => {
     const [value] = squares[idx]
 
@@ -61,6 +73,7 @@ export const Board = () => {
     // console.log("isX", isX, "clicked", idx)
     setIsX(!isX)
     setSquares(newSquares)
+    setMoveHistory([...moveHistory, idx])
 
     const [winner, list] = haveWinner(idx, newSquares)
     // console.log("winner", winner, list)
@@ -77,20 +90,28 @@ export const Board = () => {
     }
   }
 
-  const renderSquare = (i: number) => <Square key={i} value={squares[i]} onClick={handleClick(i)} />
-
   useEffect(() => {
     document.documentElement.style.setProperty("--board-size", String(boardSize))
   })
 
   return (
     <>
-      <div className="mb-2.5">
-        Next player: <span className="font-bold">{square}</span>
+      <div className="mb-2.5 flex h-8 w-full flex-row items-end justify-between gap-2">
+        <div>
+          Next player: <span className="font-bold">{square}</span>
+        </div>
+
+        {moveHistory.length > 0 && (
+          <button className="rounded border bg-slate-100 px-4 py-1 transition hover:bg-slate-200" onClick={handleUndo}>
+            undo
+          </button>
+        )}
       </div>
 
       <div className="mr-px mt-px grid grid-cols-board grid-rows-board gap-0">
-        {Array.from({ length: boardSize * boardSize }).map((_, idx) => renderSquare(idx))}
+        {squares.map((square, idx) => (
+          <Square key={idx} value={square} onClick={handleClick(idx)} />
+        ))}
       </div>
     </>
   )
