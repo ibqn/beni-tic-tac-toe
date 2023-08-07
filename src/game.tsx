@@ -10,7 +10,7 @@ export const Game = () => {
   return (
     <>
       {gameOver && (
-        <div className="absolute inset-0 overflow-hidden bg-white/80">
+        <div className="fixed inset-0 z-10 overflow-hidden bg-white/60">
           <Confetti width={width} height={height} />
         </div>
       )}
