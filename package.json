@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@mantine/hooks": "^6.0.17",
     "clsx": "^2.0.0",
     "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^1.14.0"
   },

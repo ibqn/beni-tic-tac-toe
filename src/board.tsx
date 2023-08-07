@@ -5,7 +5,12 @@ import { type SquareType } from "@/types"
 const boardSize = 40
 const defaultSquares = Array(boardSize * boardSize).fill([null]) as SquareType[]
 
-export const Board = () => {
+type Props = {
+  gameOver: boolean
+  setGameOver: (value: boolean) => void
+}
+
+export const Board = (props: Props) => {
   const [squares, setSquares] = useState(defaultSquares)
   const [isX, setIsX] = useState(true)
   const [moveHistory, setMoveHistory] = useState<number[]>([])
@@ -47,6 +52,10 @@ export const Board = () => {
   }
 
   const handleUndo = () => {
+    if (props.gameOver) {
+      return
+    }
+
     const undoSquareIndex = moveHistory.slice(-1).pop()
 
     if (undoSquareIndex !== undefined) {
@@ -57,6 +66,10 @@ export const Board = () => {
   }
 
   const handleClick = (idx: number) => () => {
+    if (props.gameOver) {
+      return
+    }
+
     const [value] = squares[idx]
 
     if (value) {
@@ -79,6 +92,7 @@ export const Board = () => {
     // console.log("winner", winner, list)
 
     if (winner) {
+      props.setGameOver(true)
       const markedSquares = newSquares.map((square, index) => {
         if (list.includes(index)) {
           const [value] = square
