@@ -2,12 +2,12 @@ import { cn } from "@/class-names"
 import { type SquareType } from "@/types"
 
 type Props = {
-  value: SquareType | null
+  value: SquareType
   onClick: () => void
 }
 
 export const Square = ({ value, onClick }: Props) => {
-  const [piece, color] = value || []
+  const { piece, color } = value
   return (
     <button
       className={cn(

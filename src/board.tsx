@@ -3,7 +3,7 @@ import { Square } from "@/square"
 import { type SquareType } from "@/types"
 
 const boardSize = 40
-const defaultSquares = Array(boardSize * boardSize).fill([null]) as SquareType[]
+const defaultSquares = Array(boardSize * boardSize).fill({}) as SquareType[]
 
 type Props = {
   gameOver: boolean
@@ -34,7 +34,7 @@ export const Board = (props: Props) => {
       for (let i = -5; i <= 5; i++) {
         const newX = i * dir.x + x
         const newY = i * dir.y + y
-        const [newSquare] = newSquares[newX + boardSize * newY] || []
+        const { piece: newSquare } = newSquares[newX + boardSize * newY] || {}
 
         if (0 <= newX && newX < boardSize && square === newSquare) {
           list.push(newX + boardSize * newY)
@@ -61,7 +61,11 @@ export const Board = (props: Props) => {
     if (undoSquareIndex !== undefined) {
       setIsX(!isX)
       setMoveHistory(moveHistory.slice(0, -1))
-      setSquares(squares.map((square, index) => (index === undoSquareIndex ? [null] : [square[0]])))
+      setSquares(
+        squares.map((square, index) =>
+          index === undoSquareIndex ? { piece: undefined } : { ...square, color: undefined }
+        )
+      )
     }
   }
 
@@ -70,15 +74,15 @@ export const Board = (props: Props) => {
       return
     }
 
-    const [value] = squares[idx]
+    const { piece } = squares[idx]
 
-    if (value) {
+    if (piece) {
       return
     }
 
     const newSquares = squares.map((square, index) => {
       if (index === idx) {
-        return [isX ? `X` : `O`] as SquareType
+        return { piece: isX ? `X` : `O` } as SquareType
       }
       return square
     })
@@ -95,8 +99,7 @@ export const Board = (props: Props) => {
       props.setGameOver(true)
       const markedSquares = newSquares.map((square, index) => {
         if (list.includes(index)) {
-          const [value] = square
-          return [value, true] as SquareType
+          return { ...square, color: true }
         }
         return square
       })

@@ -1,1 +1,4 @@
-export type SquareType = [piece: "X" | "O" | null, color?: boolean]
+export type SquareType = {
+  piece?: "X" | "O"
+  color?: boolean
+}
