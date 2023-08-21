@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@mantine/hooks": "^6.0.18",
+    "@mantine/hooks": "^6.0.19",
     "clsx": "^2.0.0",
     "react": "^18.2.0",
     "react-confetti": "^6.1.0",
