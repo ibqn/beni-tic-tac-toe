@@ -34,7 +34,7 @@ export const Board = (props: Props) => {
       for (let i = -5; i <= 5; i++) {
         const newX = i * dir.x + x
         const newY = i * dir.y + y
-        const { piece: newSquare } = newSquares[newX + boardSize * newY] || {}
+        const { piece: newSquare } = newSquares[newX + boardSize * newY] ?? {}
 
         if (0 <= newX && newX < boardSize && square === newSquare) {
           list.push(newX + boardSize * newY)
