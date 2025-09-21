@@ -12,8 +12,8 @@ export const Square = ({ value, onClick }: Props) => {
     <button
       className={cn(
         color && "text-red-600",
-        "-mr-px -mt-px h-[22px] w-[22px] border border-grau",
-        "bg-white p-0 text-center text-sm font-bold leading-[22px] focus:outline-hidden"
+        "border-grau -mt-px -mr-px h-[22px] w-[22px] border",
+        "bg-white p-0 text-center text-sm leading-[22px] font-bold focus:outline-hidden"
       )}
       onClick={onClick}
     >

@@ -17,7 +17,10 @@ export const Board = (props: Props) => {
 
   const square = useMemo(() => (isX ? "X" : "O"), [isX])
 
-  const haveWinner = (idx: number, newSquares: SquareType[]): [boolean, number[]] => {
+  const haveWinner = (
+    idx: number,
+    newSquares: SquareType[]
+  ): [boolean, number[]] => {
     const x = idx % boardSize
     const y = Math.trunc(idx / boardSize)
 
@@ -63,7 +66,9 @@ export const Board = (props: Props) => {
       setMoveHistory(moveHistory.slice(0, -1))
       setSquares(
         squares.map((square, index) =>
-          index === undoSquareIndex ? { piece: undefined } : { ...square, color: undefined }
+          index === undoSquareIndex
+            ? { piece: undefined }
+            : { ...square, color: undefined }
         )
       )
     }
@@ -108,7 +113,10 @@ export const Board = (props: Props) => {
   }
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--board-size", String(boardSize))
+    document.documentElement.style.setProperty(
+      "--board-size",
+      String(boardSize)
+    )
   })
 
   return (
@@ -119,13 +127,16 @@ export const Board = (props: Props) => {
         </div>
 
         {moveHistory.length > 0 && (
-          <button className="rounded border bg-slate-100 px-4 py-1 transition hover:bg-slate-200" onClick={handleUndo}>
+          <button
+            className="rounded border bg-slate-100 px-4 py-1 transition hover:bg-slate-200"
+            onClick={handleUndo}
+          >
             undo
           </button>
         )}
       </div>
 
-      <div className="mr-px mt-px grid grid-cols-board grid-rows-board gap-0">
+      <div className="grid-cols-board grid-rows-board mt-px mr-px grid gap-0">
         {squares.map((square, idx) => (
           <Square key={idx} value={square} onClick={handleClick(idx)} />
         ))}
